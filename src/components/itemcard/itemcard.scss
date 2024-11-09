@@ -55,7 +55,6 @@
 
     @include xs {
       width: 100%;
-      height: 100%;
     }
   }
   .user-info {
@@ -71,17 +70,26 @@
     }
   }
 
-  .listing-title {
-    margin-top: 12px;
-    font-weight: 600;
-    font-size: 18px;
-
-    @include sm {
-      font-size: 14px;
+  .listing-title-box {
+    max-width: 100%;
+    overflow: hidden;
+    white-space: pre;
+    p {
+      text-overflow: ellipsis;
+      overflow: hidden;
     }
+    .listing-title {
+      margin-top: 12px;
+      font-weight: 600;
+      font-size: 18px;
 
-    @include xs {
-      font-size: 12px;
+      @include sm {
+        font-size: 14px;
+      }
+
+      @include xs {
+        font-size: 12px;
+      }
     }
   }
 

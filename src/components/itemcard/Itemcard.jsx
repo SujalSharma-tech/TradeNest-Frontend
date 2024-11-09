@@ -2,7 +2,6 @@
 import "./itemcard.scss";
 import { Bookmark, Share, UserCircle2 } from "lucide-react";
 import crown from "./crown 1.png";
-import iphone from "./iphone.png";
 import { CLODUINARY_LINK } from "../../utils/constants";
 
 const Itemcard = ({ product }) => {
@@ -20,7 +19,7 @@ const Itemcard = ({ product }) => {
       <div className="item-image">
         <img src={CLODUINARY_LINK + product?.images[0].url} />
       </div>
-      <div>
+      <div className="listing-title-box">
         <p className="listing-title">{product?.title || "iphone 12 pro max"}</p>
       </div>
       <div className="item-category">
