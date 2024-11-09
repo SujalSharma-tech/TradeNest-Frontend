@@ -1,4 +1,4 @@
-import "./heroSection.scss";
+import "./herosection.scss";
 import { Search } from "lucide-react";
 import groupimg from "./group.png";
 const HeroSection = () => {
