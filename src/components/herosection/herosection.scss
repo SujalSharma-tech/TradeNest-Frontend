@@ -1,0 +1,122 @@
+@import "../../responsive.scss";
+.hero-section {
+  background: url("./heroimg.png");
+  background-size: cover;
+  background-position: center;
+  height: 500px;
+  border-radius: 12px;
+  .hero-phone-img {
+    display: none;
+  }
+
+  @include sm {
+    background: none;
+    background-color: #c1dcdc;
+
+    .hero-phone-img {
+      display: block;
+      position: absolute;
+      bottom: -6px;
+      left: 15px;
+      img {
+        width: 95%;
+        max-width: 470px;
+        height: auto;
+      }
+    }
+  }
+
+  .hero-info {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    height: 100%;
+    gap: 10px;
+    padding-left: 20px;
+
+    h1 {
+      font-size: 70px;
+      font-weight: bold;
+    }
+
+    h3 {
+      font-size: 40px;
+      font-weight: bold;
+    }
+
+    .search-bar {
+      position: relative;
+      width: 350px;
+    }
+
+    @include sm {
+      h1 {
+        font-size: 49px;
+        font-weight: bold;
+      }
+
+      h3 {
+        font-size: 24px;
+        font-weight: bold;
+      }
+
+      .search-bar {
+        position: relative;
+        width: 300px;
+
+        @include xs {
+          width: 278px;
+        }
+      }
+
+      padding-top: 45px;
+      position: relative;
+      justify-content: start;
+    }
+
+    .search {
+      input {
+        width: 350px;
+        padding: 10px;
+        border-radius: 12px;
+        border: none;
+        margin-top: 20px;
+        font-size: 20px;
+      }
+      @include sm {
+        input {
+          width: 300px;
+        }
+      }
+      @include xs {
+        input {
+          width: 277px;
+          font-size: 19px;
+        }
+      }
+
+      .search-button {
+        background-color: #c1dccd;
+        padding: 10px;
+        border-radius: 12px;
+        border: none;
+        margin-top: 20px;
+        font-size: 20px;
+        cursor: pointer;
+        position: absolute;
+        width: 40px;
+        height: 40px;
+        color: black;
+
+        top: 2px;
+        right: 2px;
+        display: flex;
+        align-items: center;
+      }
+    }
+
+    @include xs {
+      padding-left: 10px;
+    }
+  }
+}

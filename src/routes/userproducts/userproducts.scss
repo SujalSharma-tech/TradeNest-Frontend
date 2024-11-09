@@ -1,0 +1,47 @@
+@import "../../responsive.scss";
+
+.userproducts {
+  .listing-heading {
+    text-align: center;
+  }
+
+  .create-listing-btn {
+    display: flex;
+    justify-content: center;
+    button {
+      background-color: #4caf50;
+      color: white;
+      padding: 10px 15px;
+      margin: 10px 5px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.2s, transform 0.1s;
+      width: 60%;
+      &:hover {
+        background-color: #45a049;
+        transform: scale(1.02);
+      }
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 5px #45a049;
+      }
+      &:active {
+        transform: scale(0.98);
+      }
+    }
+  }
+  .featured-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 40px;
+    justify-content: center;
+    a {
+      @include xs {
+        width: 48%;
+      }
+    }
+  }
+}

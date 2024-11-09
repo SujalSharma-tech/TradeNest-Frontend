@@ -1,0 +1,208 @@
+@import "../../responsive.scss";
+
+nav {
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  a {
+    transition: all 0.4s ease;
+    @include sm {
+      display: none;
+    }
+
+    &:hover {
+      scale: 1.03;
+    }
+  }
+
+  .left {
+    flex: 3;
+    display: flex;
+    align-items: center;
+    gap: 50px;
+
+    @include md {
+      gap: 20px;
+    }
+
+    .logo {
+      font-weight: bold;
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      img {
+        width: 50px;
+      }
+      .img1 {
+        display: none;
+        @include md {
+          display: initial;
+        }
+        @include sm {
+          display: none;
+        }
+      }
+
+      .img2 {
+        display: flex;
+        img {
+          width: 150px;
+        }
+        @include md {
+          display: none;
+        }
+
+        @include sm {
+          display: flex;
+        }
+      }
+    }
+  }
+
+  .right {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 100%;
+
+    a {
+      padding: 12px 24px;
+
+      @include sm {
+        padding: 12px 14px;
+      }
+
+      @include xs {
+        padding: 5px 4px;
+      }
+    }
+
+    .signup {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      border-radius: 8px;
+      background-color: #c1dccd;
+    }
+
+    .logout-btn {
+      background-color: #ef8d42;
+      border-radius: 8px;
+      padding: 12px 24px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .user-profile-icon {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      position: relative;
+      cursor: pointer;
+      padding: 4px 8px;
+      border-radius: 10px;
+
+      &:hover {
+        background-color: gainsboro;
+      }
+
+      .icon {
+        width: 30px;
+        border-radius: 50%;
+        display: flex;
+
+        img {
+          width: 100%;
+          background: none;
+        }
+      }
+
+      .user-dropdown-options {
+        position: absolute;
+        display: flex;
+        z-index: 2;
+        flex-direction: column;
+        background-color: #fff;
+        width: 150px;
+        top: 100%;
+        left: -30px;
+        box-shadow: 1px 1px 11px rgba(0, 0, 0, 0.5);
+
+        a,
+        div {
+          padding: 10px;
+          text-align: center;
+          border-bottom: 1px solid #ccc;
+          color: black;
+          font-weight: bold;
+          transition: all 0.4s ease;
+          cursor: pointer;
+
+          &:hover {
+            background-color: #ccc;
+          }
+
+          @include sm {
+            display: initial;
+          }
+        }
+      }
+    }
+
+    .menuicon {
+      display: none;
+      margin-left: 10px;
+      z-index: 999;
+
+      img {
+        width: 50px;
+
+        @include sm {
+          width: 33px;
+        }
+      }
+      @include sm {
+        display: initial;
+      }
+    }
+
+    .white-icon {
+      filter: invert(1);
+    }
+
+    .menuitems {
+      background-color: black;
+      z-index: 12;
+      position: fixed;
+      top: 0;
+      right: -50%;
+      width: 50%;
+      height: 100vh;
+      color: white;
+      transition: all 1s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+
+      &.active {
+        right: 0;
+      }
+
+      @include sm {
+        a {
+          color: white;
+          display: initial;
+        }
+      }
+    }
+  }
+}
