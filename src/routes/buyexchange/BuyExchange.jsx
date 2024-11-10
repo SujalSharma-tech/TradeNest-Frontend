@@ -1,25 +1,37 @@
 import "./buyexchange.scss";
 import Banner2 from "../../components/banner2/Banner2";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useSearchParams } from "react-router-dom";
 import { Search } from "lucide-react";
 import Itemcard from "../../components/itemcard/Itemcard";
 import Getintouch from "../../components/getintouch/Getintouch";
+import { GET_FILTERED_PRODUCTS } from "../../utils/constants";
+import { apiClient } from "../../lib/api-client";
 const BuyExchange = () => {
-  const type = ["Buy", "Exchange"];
-  const [Query, setQuery] = useState({ type: "Buy" });
+  // ?type=buy&condition=new&category=electronics&location=university&minprice=1000&maxprice=5000
+
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const initialCategory = searchParams.get("categories") || [];
+
+  const [category, setCategory] = useState({
+    Electronics: initialCategory.includes("Electronics"),
+    Bicycle: initialCategory.includes("Bicycle"),
+    Books: initialCategory.includes("Books"),
+    Clothes: initialCategory.includes("Clothes"),
+    Furniture: initialCategory.includes("Furniture"),
+    Others: initialCategory.includes("Others"),
+  });
+
   const [condition, setCondition] = useState({
     new: false,
     gentlyUsed: false,
     heavilyUsed: false,
   });
-  const [category, setCategory] = useState({
-    Electronics: false,
-    Bicycle: false,
-    Books: false,
-    Clothes: false,
-    Furniture: false,
-    Others: false,
+
+  const [location, setLocation] = useState({
+    University: false,
+    Outside: false,
   });
 
   const [price, setPrice] = useState({
@@ -27,10 +39,83 @@ const BuyExchange = () => {
     max: "",
   });
 
-  const [location, setLocation] = useState({
-    University: false,
-    Outside: false,
-  });
+  const type = ["Buy", "Exchange"];
+  const [Query, setQuery] = useState({ type: "Buy" });
+
+  const [finalParams, setFinalParams] = useState("");
+
+  const handleSearchClick = () => {
+    const selectedCategories = Object.keys(category)
+      .filter((key) => category[key])
+      .join(",");
+    const selectedConditions = Object.keys(condition)
+      .filter((key) => condition[key])
+      .join(",");
+    const selectedLocations = Object.keys(location)
+      .filter((key) => location[key])
+      .join(",");
+    const selectedPrice = price.min + "," + price.max;
+
+    const params = new URLSearchParams();
+
+    if (selectedCategories) params.set("categories", selectedCategories);
+    if (selectedConditions)
+      params.set(
+        "conditions",
+        condition.gentlyUsed + " " + condition.new + " " + condition.heavilyUsed
+      );
+    if (selectedLocations)
+      params.set("location", location.Outside + " " + location.University);
+    if (selectedPrice) params.set("minprice", price.min);
+    if (selectedPrice) params.set("maxprice", price.max);
+
+    // navigate(`/buyexchange?${params.toString()}`);
+
+    setFinalParams(params.toString());
+  };
+
+  useEffect(() => {
+    const fetchFilteredProducts = async () => {
+      const selectedCategories = Object.keys(category)
+        .filter((key) => category[key])
+        .join(",");
+
+      const data = await apiClient.post(GET_FILTERED_PRODUCTS, {
+        categories: selectedCategories,
+        condition,
+        location,
+        type: Query.type,
+        minprice: price.min,
+        maxprice: price.max,
+      });
+      console.log(data);
+    };
+
+    fetchFilteredProducts();
+  }, [finalParams, setFinalParams]);
+  // const [condition, setCondition] = useState({
+  //   new: true,
+  //   gentlyUsed: true,
+  //   heavilyUsed: false,
+  // });
+  // const [category, setCategory] = useState({
+  //   Electronics: true,
+  //   Bicycle: false,
+  //   Books: false,
+  //   Clothes: false,
+  //   Furniture: false,
+  //   Others: false,
+  // });
+
+  // const [price, setPrice] = useState({
+  //   min: 0,
+  //   max: 10000000,
+  // });
+
+  // const [location, setLocation] = useState({
+  //   University: false,
+  //   Outside: false,
+  // });
 
   const [showFilters, setShowFilters] = useState(false);
 
@@ -164,7 +249,7 @@ const BuyExchange = () => {
               <input
                 type="checkbox"
                 name="Books"
-                checked={condition.Books}
+                checked={category.Books}
                 onChange={handleCategoryChange}
               />
               Books
@@ -243,7 +328,9 @@ const BuyExchange = () => {
               </label>
             </div>
           </div>
-          <button className="search-filter-btn">Search</button>
+          <button className="search-filter-btn" onClick={handleSearchClick}>
+            Search
+          </button>
         </div>
         <div className="right">
           <div className="search-filter">
@@ -315,7 +402,7 @@ const BuyExchange = () => {
                     <input
                       type="checkbox"
                       name="Books"
-                      checked={condition.Books}
+                      checked={category.Books}
                       onChange={handleCategoryChange}
                     />
                     Books

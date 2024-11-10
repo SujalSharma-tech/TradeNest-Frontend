@@ -19,11 +19,20 @@ import { useAppStore } from "./store/index";
 import { apiClient } from "./lib/api-client";
 import { GET_ALL_PRODUCTS_ROUTE, GET_USER_INFO } from "./utils/constants";
 const App = () => {
-  const { userInfo, setUserInfo, products, setProducts, setProductsTriggered } =
-    useAppStore();
+  const {
+    userInfo,
+    setUserInfo,
+    products,
+    setProducts,
+    setProductsTriggered,
+    loading,
+    setLoading,
+    isProductsFetched,
+    setIsProductsFetched,
+  } = useAppStore();
   const isProductsTriggered = useAppStore((state) => state.isProductsTriggered);
-  const [loading, setLoading] = useState(true);
-  const [isProductsFetched, setIsProductsFetched] = useState(false);
+  // const [loading, setLoading] = useState(true);
+  // const [isProductsFetched, setIsProductsFetched] = useState(false);
 
   useEffect(() => {
     const getUserInfo = async () => {
@@ -77,12 +86,13 @@ const App = () => {
   const ProtectedRoute = ({ children }) => {
     const { userInfo } = useAppStore();
     const isAuthenticated = !!userInfo;
-    console.log("isauth:", userInfo);
+    if (loading) return <h1>Loading...</h1>;
     return isAuthenticated ? children : <Navigate to="/signup" />;
   };
   // eslint-disable-next-line react/prop-types
   const AuthRoute = ({ children }) => {
     const isAuthenticated = !!userInfo;
+    if (loading) return <h1>Loading...</h1>;
     return isAuthenticated ? <Navigate to="/" /> : children;
   };
 
@@ -130,9 +140,7 @@ const App = () => {
     },
   ]);
 
-  return loading ? (
-    <h1>Loading... </h1>
-  ) : (
+  return (
     <>
       <RouterProvider router={router} />
     </>

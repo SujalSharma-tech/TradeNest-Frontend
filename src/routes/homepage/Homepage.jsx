@@ -12,8 +12,8 @@ import HeroSection from "../../components/herosection/HeroSection";
 import { Link } from "react-router-dom";
 import { useAppStore } from "../../store";
 const Homepage = () => {
-  const { products } = useAppStore();
-  console.log(products);
+  const { products, isProductsFetched } = useAppStore();
+
   return (
     <div className="homepage">
       <HeroSection />
@@ -23,48 +23,62 @@ const Homepage = () => {
       </div>
 
       <div className="categories-container">
-        <div className="category-box">
-          <div className="category-img">
-            <img src={electronics} />
+        <Link to={"/buyexchange?categories=Electronics"}>
+          <div className="category-box">
+            <div className="category-img">
+              <img src={electronics} />
+            </div>
+            <div className="category-name">Electronics</div>
           </div>
-          <div className="category-name">Electronics</div>
-        </div>
-        <div className="category-box">
-          <div className="category-img">
-            <img src={bicycle} />
+        </Link>
+        <Link to={"/buyexchange?categories=Bicycle"}>
+          <div className="category-box">
+            <div className="category-img">
+              <img src={bicycle} />
+            </div>
+            <div className="category-name">Bicycle</div>
           </div>
-          <div className="category-name">Bicycle</div>
-        </div>
-        <div className="category-box">
-          <div className="category-img">
-            <img src={books} />
+        </Link>
+        <Link to={"/buyexchange?categories=Books"}>
+          <div className="category-box">
+            <div className="category-img">
+              <img src={books} />
+            </div>
+            <div className="category-name">Books</div>
           </div>
-          <div className="category-name">Books</div>
-        </div>
-        <div className="category-box">
-          <div className="category-img">
-            <img src={clothes} />
+        </Link>
+        <Link to={"/buyexchange?categories=Clothes"}>
+          <div className="category-box">
+            <div className="category-img">
+              <img src={clothes} />
+            </div>
+            <div className="category-name">Clothes</div>
           </div>
-          <div className="category-name">Clothes</div>
-        </div>
-        <div className="category-box">
-          <div className="category-img">
-            <img src={furniture} />
+        </Link>
+        <Link to={"/buyexchange?categories=Furniture"}>
+          <div className="category-box">
+            <div className="category-img">
+              <img src={furniture} />
+            </div>
+            <div className="category-name">Furniture</div>
           </div>
-          <div className="category-name">Furniture</div>
-        </div>
-        <div className="category-box">
-          <div className="category-img">
-            <img src={electronics} />
+        </Link>
+        <Link to={"/buyexchange?categories=Electronics"}>
+          <div className="category-box">
+            <div className="category-img">
+              <img src={electronics} />
+            </div>
+            <div className="category-name">Electronics</div>
           </div>
-          <div className="category-name">Electronics</div>
-        </div>
-        <div className="category-box">
-          <div className="category-img">
-            <img src={others} />
+        </Link>
+        <Link to={"/buyexchange?categories=Others"}>
+          <div className="category-box">
+            <div className="category-img">
+              <img src={others} />
+            </div>
+            <div className="category-name">Others</div>
           </div>
-          <div className="category-name">Others</div>
-        </div>
+        </Link>
       </div>
 
       <div className="featured">
@@ -72,26 +86,21 @@ const Homepage = () => {
       </div>
 
       <div className="featured-container">
-        {products &&
-          products.map((product) => {
-            return (
-              <Link key={product._id} to={`/productdetails/${product._id}`}>
-                <Itemcard product={product} />
-              </Link>
-            );
-          })}
-        {/* <Link to={"/productdetails/1"}>
-          <Itemcard />
-        </Link>
-        <Link to={"/productdetails/2"}>
-          <Itemcard />
-        </Link>
-        <Link to={"/productdetails/3"}>
-          <Itemcard />
-        </Link>
-        <Link to={"/productdetails/4"}>
-          <Itemcard />
-        </Link> */}
+        {isProductsFetched ? (
+          products && products.length > 0 ? (
+            products.map((product) => {
+              return (
+                <Link key={product._id} to={`/productdetails/${product._id}`}>
+                  <Itemcard product={product} />
+                </Link>
+              );
+            })
+          ) : (
+            <h1>No products found</h1>
+          )
+        ) : (
+          <h1>Loading...</h1>
+        )}
       </div>
 
       <Banner2 />

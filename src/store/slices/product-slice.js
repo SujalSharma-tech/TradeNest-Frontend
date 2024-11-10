@@ -1,6 +1,10 @@
 export const createProductSlice = (set) => ({
   products: [],
   isProductsTriggered: false,
+  loading: true,
+  setLoading: (value) => set({ loading: value }),
+  isProductsFetched: false,
+  setIsProductsFetched: (value) => set({ isProductsFetched: value }),
   setProductsTriggered: (value) => set({ isProductsTriggered: value }),
   setProducts: (products) => set({ products }),
   addProduct: (product) =>
