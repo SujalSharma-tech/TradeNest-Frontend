@@ -115,7 +115,7 @@ const SingleProductPage = () => {
           <div className="product-details">
             <table className="details-table">
               <tbody>
-                {product.length > 0
+                {product?.length > 0
                   ? Object.entries(product[0]?.details).map(([key, value]) => (
                       <tr key={key}>
                         <td className="label-cell">
