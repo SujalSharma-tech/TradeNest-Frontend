@@ -31,12 +31,12 @@ const SingleProductPage = () => {
     DentsScratches: "Dents/Scratches",
     PublishedDate: "Published Date",
   };
-  if (product.length > 0) {
+  if (product?.length > 0) {
     if (mainphoto === "") {
       setMainphoto(product[0]?.images[0].url);
     }
   }
-  return product.length > 0 ? (
+  return product?.length > 0 ? (
     <div className="singleproductpage">
       <button onClick={handleBackClick} className="back-btn">
         <ArrowLeft size={18} /> Back
