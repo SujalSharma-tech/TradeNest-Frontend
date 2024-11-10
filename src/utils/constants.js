@@ -1,3 +1,4 @@
+// export const HOST = "http://localhost:4000";
 export const HOST = "https://api.tradenest.tech";
 export const AUTH_ROUTES = "api/auth";
 export const SIGNUP_ROUTE = `${AUTH_ROUTES}/signup`;

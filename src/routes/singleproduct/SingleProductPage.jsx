@@ -123,7 +123,7 @@ const SingleProductPage = () => {
                         </td>
                         <td className="value-cell">
                           {": "}
-                          {value.includes("\n")
+                          {typeof value !== "number" && value.includes("\n")
                             ? value.split("\n").map((line, index) => (
                                 <Fragment key={index}>
                                   {line}
