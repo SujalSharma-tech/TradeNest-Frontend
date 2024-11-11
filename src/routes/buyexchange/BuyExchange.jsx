@@ -11,6 +11,10 @@ const BuyExchange = () => {
   // ?type=buy&condition=new&category=electronics&location=university&minprice=1000&maxprice=5000
 
   const [searchParams, setSearchParams] = useSearchParams();
+  const [searchValue, setSearchValue] = useState(
+    searchParams.get("search") || ""
+  );
+  const [filteredProducts, setFilteredProducts] = useState([]);
 
   const initialCategory = searchParams.get("categories") || [];
 
@@ -57,6 +61,7 @@ const BuyExchange = () => {
     const selectedPrice = price.min + "," + price.max;
 
     const params = new URLSearchParams();
+    let newdata = "";
 
     if (selectedCategories) params.set("categories", selectedCategories);
     if (selectedConditions)
@@ -68,10 +73,16 @@ const BuyExchange = () => {
       params.set("location", location.Outside + " " + location.University);
     if (selectedPrice) params.set("minprice", price.min);
     if (selectedPrice) params.set("maxprice", price.max);
+    newdata =
+      searchValue +
+      selectedCategories +
+      selectedConditions +
+      selectedLocations +
+      selectedPrice;
 
     // navigate(`/buyexchange?${params.toString()}`);
-
-    setFinalParams(params.toString());
+    console.log("newdata", newdata);
+    setFinalParams(newdata.toString());
   };
 
   useEffect(() => {
@@ -87,12 +98,15 @@ const BuyExchange = () => {
         type: Query.type,
         minprice: price.min,
         maxprice: price.max,
+        searchValue,
       });
-      console.log(data);
+      if (data) {
+        setFilteredProducts(data.data.products);
+      }
     };
 
     fetchFilteredProducts();
-  }, [finalParams, setFinalParams]);
+  }, [finalParams, setFinalParams, Query]);
   // const [condition, setCondition] = useState({
   //   new: true,
   //   gentlyUsed: true,
@@ -335,8 +349,13 @@ const BuyExchange = () => {
         <div className="right">
           <div className="search-filter">
             <div className="search-bar">
-              <input type="text" placeholder="Search Products Here" />
-              <button>
+              <input
+                type="text"
+                placeholder="Search Products Here"
+                value={searchValue}
+                onChange={(e) => setSearchValue(e.target.value)}
+              />
+              <button onClick={handleSearchClick}>
                 <Search />
               </button>
             </div>
@@ -480,11 +499,27 @@ const BuyExchange = () => {
                   </div>
                 </div>
               </div>
-              <button className="filter-search-btn-mobile">Search</button>
+              <button
+                className="filter-search-btn-mobile"
+                onClick={handleSearchClick}
+              >
+                Search
+              </button>
             </div>
           )}
           <div className="featured-container">
-            <Link to={"/productdetails/1"}>
+            {filteredProducts && filteredProducts.length > 0 ? (
+              filteredProducts.map((product) => {
+                return (
+                  <Link key={product._id} to={`/productdetails/${product._id}`}>
+                    <Itemcard product={product} />
+                  </Link>
+                );
+              })
+            ) : (
+              <h1>No Products Found</h1>
+            )}
+            {/* <Link to={"/productdetails/1"}>
               <Itemcard />
             </Link>
             <Link to={"/productdetails/2"}>
@@ -504,10 +539,7 @@ const BuyExchange = () => {
             </Link>
             <Link to={"/productdetails/7"}>
               <Itemcard />
-            </Link>
-            <Link to={"/productdetails/8"}>
-              <Itemcard />
-            </Link>
+            </Link> */}
           </div>
         </div>
       </div>

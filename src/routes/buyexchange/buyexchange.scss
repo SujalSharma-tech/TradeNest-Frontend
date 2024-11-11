@@ -192,9 +192,9 @@
         }
 
         .f-listing {
-          width: 220px;
+          width: 205px;
           @include md {
-            width: 170px;
+            width: 173px;
           }
 
           @include sm {
@@ -206,8 +206,8 @@
           }
 
           .item-image {
-            width: auto;
-            height: auto;
+            width: 100%;
+            height: 170px;
           }
         }
       }
@@ -220,6 +220,9 @@
           display: none;
           @include md {
             display: flex;
+          }
+          @include xs {
+            padding: 8px 10px;
           }
           background: none;
           align-items: center;
